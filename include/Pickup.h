@@ -15,10 +15,11 @@ class Pickup
         void setActive();
         bool getActive();
         sf::Vector2i getPos();
+        void randPos();
         std::string debug();
 
         // Pure virtual functions
-        virtual void randPos() = 0;
+        virtual void updatePos() = 0;
         virtual int consume() = 0;
         virtual void render(sf::RenderWindow &window) = 0;
 

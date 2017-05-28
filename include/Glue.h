@@ -11,7 +11,7 @@ class Glue : public Pickup
         ~Glue();
 
         // Inherited functions
-        void randPos();
+        void updatePos();
         int consume();
         void render(sf::RenderWindow &window);
 

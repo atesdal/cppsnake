@@ -82,8 +82,6 @@ void Game::run()
     // Main game loop
     while(window.isOpen()){
 
-
-
         while(gameState == 0){
 
             // If statement to check that time has not expired
@@ -147,6 +145,11 @@ void Game::run()
             // Debug messages to console
 //            std::cout << snakeVector[0]->debug() << std::endl; //<< snakeVector[1]->debug() << std::endl;
 //            std::cout << snakeVector[1]->debug() << std::endl; //<< snakeVector[1]->debug() << std::endl;
+//            std::cout << pickupVector[0]->debug() << std::endl;
+//            std::cout << pickupVector[1]->debug() << std::endl;
+//            std::cout << pickupVector[2]->debug() << std::endl;
+//            std::cout << pickupVector[3]->debug() << std::endl;
+//            std::cout << pickupVector[4]->debug() << std::endl;
 
             // Delay
             while(clock.getElapsedTime().asMilliseconds()<500){}
@@ -226,11 +229,25 @@ void Game::update(Snake::EDirection dir)
     gameTimerText.setString(timerToString(gameTimer));
 
     // Pickups
+    unsigned int pickUpIndex = 0;
+    bool overlap = false;
     for(auto p : pickupVector){
         if(rand()%10 == 0 && !p->getActive()){
             p->setActive();
             p->randPos();
+            do{
+                overlap = false;
+                for(unsigned int i = 0; i < pickupVector.size(); i++){
+                    if(i != pickUpIndex){
+                        if(p->getPos() == pickupVector[i]->getPos()){
+                            p->randPos();
+                            overlap = true;
+                        }
+                    }
+                }
+            }while(overlap);
         }
+        pickUpIndex++;
     }
 }
 

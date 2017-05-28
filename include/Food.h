@@ -11,7 +11,7 @@ class Food : public Pickup
         ~Food();
 
         // Inherited functions
-        void randPos();
+        void updatePos();
         int consume();
         void render(sf::RenderWindow &window);
 
