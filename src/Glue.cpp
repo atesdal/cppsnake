@@ -13,15 +13,8 @@ Glue::~Glue()
 
 }
 
-// Randomizes position of the glue pickup
-void Glue::randPos()
+void Glue::updatePos()
 {
-    position.x = ((rand()%(maxBounds.x / 20) * 20) - 20);
-    position.y = ((rand()%(maxBounds.y / 20) * 20) - 20);
-
-    if(position.x < 20 || position.x > (maxBounds.x - 20) || position.y < 20 || position.y > (maxBounds.y - 20)){
-        randPos();
-    }
     glueShape.setPosition(position.x, position.y);
 }
 
