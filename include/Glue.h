@@ -1,14 +1,14 @@
-#ifndef FOOD_H
-#define FOOD_H
+#ifndef GLUE_H
+#define GLUE_H
 #include "Pickup.h"
 
 // Child class of pickup
-class Food : public Pickup
+class Glue : public Pickup
 {
     public:
         // Constructor/destructor
-        Food(int mW, int mH);
-        ~Food();
+        Glue(int mW, int mH);
+        ~Glue();
 
         // Inherited functions
         void randPos();
@@ -17,8 +17,8 @@ class Food : public Pickup
 
     private:
         // Private vars
-        sf::RectangleShape foodShape;
-        int growValue;
+        sf::RectangleShape glueShape;
+        int glueValue = 1;
 };
 
-#endif // FOOD_H
+#endif // GLUE_H
