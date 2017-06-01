@@ -35,12 +35,12 @@ class Snake
         sf::Vector2i getHeadPos() const;
         std::string getScoreString();
         void addScore(int amount);
-        std::vector<sf::Vector2i> getSnakeBody() const;
+        std::vector<sf::Vector2i>* getSnakeBody() const;
         std::string debug();
 
         // Virtual functions
-        virtual void swapSegments(EDirection dir);
-        virtual void grow(EDirection dir);
+        virtual void swapSegments(EDirection dir) = 0;
+        virtual void grow(EDirection dir) = 0;
 
     protected:
         // Protected functions

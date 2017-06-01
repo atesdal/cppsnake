@@ -51,7 +51,7 @@ Game::Game(int width, int height, int totPickups)
     gameOver.setFillColor(sf::Color::White);
     gameOver.setPosition((gWidth / 2), (gHeight / 2));
 
-    Snake *a = new Snake(200, 200);
+    PlayerSnake *a = new PlayerSnake(200, 200);
     AISnake *b = new AISnake(100, 100);
     snakeVector.push_back(a);
     snakeVector.push_back(b);
@@ -266,13 +266,14 @@ void Game::checkCollisions()
         // If statement to ensure no redundant checks if snake is too small to collide with itself
         if(p->getSnakeSize() >= 4){
             // Snake + Own tail
-            std::vector<sf::Vector2i> snakeToCheck = p->getSnakeBody();
+            std::vector<sf::Vector2i> *snakeToCheck = p->getSnakeBody();
             for(int i = 3; i < (p->getSnakeSize()); i++){
-                if(p->getHeadPos() == snakeToCheck[i]){
+                if(p->getHeadPos() == snakeToCheck->at(i)){
                     gameState = 2;
                     return;
                 }
             }
+            delete snakeToCheck;
         }
 
         // Snake + Pickup
@@ -293,7 +294,7 @@ void Game::checkCollisions()
 
         // Snake + Snake
         // Temporary vector to hold the segment positions of the snake being checked
-        std::vector<sf::Vector2i> nextSnake;
+        std::vector<sf::Vector2i> *nextSnake;
         // For loop to prevent checking if the snake is colliding with itself
         for(unsigned int snakeIndex = 0; snakeIndex < snakeVector.size(); snakeIndex++){
 
@@ -302,7 +303,7 @@ void Game::checkCollisions()
 
                 // For loop checking the current snake's head against the body of a different snake
                 for(int i = 0; i <= (snakeVector[snakeIndex]->getSnakeSize() - 1); i++){
-                    if(p->getHeadPos() == nextSnake[i]){
+                    if(p->getHeadPos() == nextSnake->at(i)){
                         if(i == 0){
                             gameState = 3;
                         }
@@ -312,6 +313,7 @@ void Game::checkCollisions()
                         return;
                     }
                 }
+                delete nextSnake;
             }
         }
         snakeNum++;

@@ -57,98 +57,98 @@ void Snake::render(sf::RenderWindow &window)
 }
 
 // Snake movement function, moves last list element(tail) to the front and sets new position based on old the old heads position
-void Snake::swapSegments(EDirection dir)
-{
-    // Check to see if snake is trying to move backwards into itself
-    if(dirCheck(dir)){
-        swapSegments(lastMove);
-    }
-    else{
-        // If there is only one segment in the snake
-        if(head->next != nullptr){
-            tail->next = head;
-            head->prev = tail;
-            tail = tail->prev;
-            tail->next = nullptr;
-            head = head->prev;
-            head->prev = nullptr;
-
-            switch(dir){
-                case EDirection::eNorth:
-                    head->setPosition(head->next->getX(), head->next->getY() - stepAmount);
-                    break;
-                case EDirection::eEast:
-                    head->setPosition(head->next->getX() + stepAmount, head->next->getY());
-                    break;
-                case EDirection::eSouth:
-                    head->setPosition(head->next->getX(), head->next->getY() + stepAmount);
-                    break;
-                case EDirection::eWest:
-                    head->setPosition(head->next->getX() - stepAmount, head->next->getY());
-                default:
-                    break;
-            }
-        }
-        else{
-            switch(dir){
-                case EDirection::eNorth:
-                    head->setPosition(head->getX(), head->getY() - stepAmount);
-                    break;
-                case EDirection::eEast:
-                    head->setPosition(head->getX() + stepAmount, head->getY());
-                    break;
-                case EDirection::eSouth:
-                    head->setPosition(head->getX(), head->getY() + stepAmount);
-                    break;
-                case EDirection::eWest:
-                    head->setPosition(head->getX() - stepAmount, head->getY());
-                default:
-                    break;
-            }
-        }
-        // Update lastMove var to enforce legal movement
-        lastMove = dir;
-    }
-}
+//void Snake::swapSegments(EDirection dir)
+//{
+//    // Check to see if snake is trying to move backwards into itself
+//    if(dirCheck(dir)){
+//        swapSegments(lastMove);
+//    }
+//    else{
+//        // If there is only one segment in the snake
+//        if(head->next != nullptr){
+//            tail->next = head;
+//            head->prev = tail;
+//            tail = tail->prev;
+//            tail->next = nullptr;
+//            head = head->prev;
+//            head->prev = nullptr;
+//
+//            switch(dir){
+//                case EDirection::eNorth:
+//                    head->setPosition(head->next->getX(), head->next->getY() - stepAmount);
+//                    break;
+//                case EDirection::eEast:
+//                    head->setPosition(head->next->getX() + stepAmount, head->next->getY());
+//                    break;
+//                case EDirection::eSouth:
+//                    head->setPosition(head->next->getX(), head->next->getY() + stepAmount);
+//                    break;
+//                case EDirection::eWest:
+//                    head->setPosition(head->next->getX() - stepAmount, head->next->getY());
+//                default:
+//                    break;
+//            }
+//        }
+//        else{
+//            switch(dir){
+//                case EDirection::eNorth:
+//                    head->setPosition(head->getX(), head->getY() - stepAmount);
+//                    break;
+//                case EDirection::eEast:
+//                    head->setPosition(head->getX() + stepAmount, head->getY());
+//                    break;
+//                case EDirection::eSouth:
+//                    head->setPosition(head->getX(), head->getY() + stepAmount);
+//                    break;
+//                case EDirection::eWest:
+//                    head->setPosition(head->getX() - stepAmount, head->getY());
+//                default:
+//                    break;
+//            }
+//        }
+//        // Update lastMove var to enforce legal movement
+//        lastMove = dir;
+//    }
+//}
 
 // Snake grow function, creates new segment and adds it to the front in the direction the player inputs
-void Snake::grow(EDirection dir)
-{
-    // Check to see if snake is trying to move backwards into itself
-    if(dirCheck(dir)){
-        grow(lastMove);
-    }
-    else{
-        Segment *newSegment = new Segment();
-        switch(dir){
-            case EDirection::eNorth:
-                newSegment->setPosition(head->getX(), head->getY() - stepAmount);
-                break;
-            case EDirection::eEast:
-                newSegment->setPosition(head->getX() + stepAmount, head->getY());
-                break;
-            case EDirection::eSouth:
-                newSegment->setPosition(head->getX(), head->getY() + stepAmount);
-                break;
-            case EDirection::eWest:
-                newSegment->setPosition(head->getX() - stepAmount, head->getY());
-                break;
-            case EDirection::eHold:
-                newSegment->prev = tail;
-                tail->next = newSegment;
-                tail = newSegment;
-                return;
-        }
-        newSegment->next = head;
-        head->prev = newSegment;
-        head = newSegment;
-        // Update lastMove var to enforce legal movement
-        lastMove = dir;
-        snakeSize++;
-    }
-    // Increment snakeSize for later use
-
-}
+//void Snake::grow(EDirection dir)
+//{
+//    // Check to see if snake is trying to move backwards into itself
+//    if(dirCheck(dir)){
+//        grow(lastMove);
+//    }
+//    else{
+//        Segment *newSegment = new Segment();
+//        switch(dir){
+//            case EDirection::eNorth:
+//                newSegment->setPosition(head->getX(), head->getY() - stepAmount);
+//                break;
+//            case EDirection::eEast:
+//                newSegment->setPosition(head->getX() + stepAmount, head->getY());
+//                break;
+//            case EDirection::eSouth:
+//                newSegment->setPosition(head->getX(), head->getY() + stepAmount);
+//                break;
+//            case EDirection::eWest:
+//                newSegment->setPosition(head->getX() - stepAmount, head->getY());
+//                break;
+//            case EDirection::eHold:
+//                newSegment->prev = tail;
+//                tail->next = newSegment;
+//                tail = newSegment;
+//                return;
+//        }
+//        newSegment->next = head;
+//        head->prev = newSegment;
+//        head = newSegment;
+//        // Update lastMove var to enforce legal movement
+//        lastMove = dir;
+//        snakeSize++;
+//    }
+//    // Increment snakeSize for later use
+//
+//}
 
 // Internal function to enforce legal movement, returns true if directions are opposite
 bool Snake::dirCheck(EDirection dir)
@@ -226,12 +226,12 @@ void Snake::addScore(int amount)
 }
 
 // Returns a vector containing the position of all segments in a snake, used for collision tests
-std::vector<sf::Vector2i> Snake::getSnakeBody() const
+std::vector<sf::Vector2i>* Snake::getSnakeBody() const
 {
     Segment *travNode = head;
-    std::vector<sf::Vector2i> posVector;
+    std::vector<sf::Vector2i> *posVector = new std::vector<sf::Vector2i>;
     while(travNode != nullptr){
-        posVector.push_back(sf::Vector2i(travNode->getX(), travNode->getY()));
+        posVector->push_back(sf::Vector2i(travNode->getX(), travNode->getY()));
         travNode = travNode->next;
     }
     return posVector;

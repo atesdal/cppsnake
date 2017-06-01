@@ -13,6 +13,8 @@ class AISnake : public Snake
         // Public functions
         void swapSegments(Snake::EDirection dir);
         void grow(Snake::EDirection dir);
+        bool avoidCollision(Snake::EDirection dir);
+
 };
 
 #endif // AISNAKE_H
