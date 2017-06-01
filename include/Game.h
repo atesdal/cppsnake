@@ -2,6 +2,7 @@
 #define GAME_H
 #include "Snake.h"
 #include "AISnake.h"
+#include "PlayerSnake.h"
 #include "Pickup.h"
 #include "Food.h"
 #include "Glue.h"
