@@ -10,7 +10,7 @@ class Snake
     public:
         // Constructor/destructor
         Snake(int startX, int startY);
-        virtual ~Snake();
+        virtual ~Snake() = 0;
 
         // Enum for directions, eNorth = up
         //                      eEast = right

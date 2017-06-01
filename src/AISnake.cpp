@@ -7,7 +7,15 @@ AISnake::AISnake(int startX, int startY) : Snake(startX, startY)
 
 AISnake::~AISnake()
 {
+    Segment *travNode = head;
+    Segment *toDelete = head;
 
+    while(travNode != nullptr){
+        toDelete = travNode;
+        travNode = travNode->next;
+        delete toDelete;
+    }
+    delete travNode;
 }
 void AISnake::swapSegments(Snake::EDirection dir)
 {

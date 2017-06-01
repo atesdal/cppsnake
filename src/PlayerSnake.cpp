@@ -2,12 +2,20 @@
 
 PlayerSnake::PlayerSnake(int startX, int startY) : Snake(startX, startY)
 {
-    //ctor
+
 }
 
 PlayerSnake::~PlayerSnake()
 {
-    //dtor
+    Segment *travNode = head;
+    Segment *toDelete = head;
+
+    while(travNode != nullptr){
+        toDelete = travNode;
+        travNode = travNode->next;
+        delete toDelete;
+    }
+    delete travNode;
 }
 
 void PlayerSnake::swapSegments(EDirection dir)
