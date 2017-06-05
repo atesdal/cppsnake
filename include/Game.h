@@ -25,6 +25,8 @@ class Game
         void render(sf::RenderWindow &window);
         void update(Snake::EDirection dir);
         void checkCollisions();
+        void AISnakeControl();
+        sf::Vector2i getOffset(sf::Vector2i src, sf::Vector2i dest);
         std::string timerToString(sf::Clock &clock);
 
         // Private vars

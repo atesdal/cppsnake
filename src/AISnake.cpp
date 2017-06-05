@@ -1,142 +1,60 @@
 #include "AISnake.h"
 
-AISnake::AISnake(int startX, int startY) : Snake(startX, startY)
+AISnake::AISnake(int startX, int startY) : Snake(startX, startY, sf::Color::Blue)
 {
-
+    isAI = true;
+    snakeColour = sf::Color::Blue;
 }
 
-AISnake::~AISnake()
+void AISnake::update(Snake::EDirection dir)
 {
-    Segment *travNode = head;
-    Segment *toDelete = head;
+    dir = setDirection();
 
-    while(travNode != nullptr){
-        toDelete = travNode;
-        travNode = travNode->next;
-        delete toDelete;
+    // If snake is growing
+    if(growthAmount != 0){
+        grow(dir);
+        growthAmount--;
     }
-    delete travNode;
+
+    // If "break" key was pressed
+//    else if(dir == EDirection::eHold){
+//        if(hasGlue){
+//            hasGlue = false;
+//            if(growthAmount != 0){
+//                grow(dir);
+//            }
+//        }
+//        else{
+//            update(lastMove);
+//        }
+//    }
+
+    // For normal movement
+    else{
+        swapSegments(dir);
+    }
 }
-void AISnake::swapSegments(Snake::EDirection dir)
-{
-    // AI snake uses random movement
-    switch((rand()%3)){
-        case 0:
-            dir = Snake::EDirection::eNorth;
-            break;
-        case 1:
-            dir = Snake::EDirection::eEast;
-            break;
-        case 2:
-            dir = Snake::EDirection::eSouth;
-            break;
-        case 3:
-            dir = Snake::EDirection::eWest;
-            break;
-    }
 
-    // Check to see if snake is trying to move backwards into itself
-    if(dirCheck(dir)){
-        swapSegments(lastMove);
+Snake::EDirection AISnake::setDirection()
+{
+    Snake::EDirection dir;
+    if(head->getX() < target.x){
+        dir = Snake::EDirection::eEast;
+    }
+    else if(head->getX() > target.x){
+        dir = Snake::EDirection::eWest;
+    }
+    else if(head->getY() < target.y){
+        dir = Snake::EDirection::eSouth;
     }
     else{
-        // If there is only one segment in the snake
-        if(head->next != nullptr){
-            tail->next = head;
-            head->prev = tail;
-            tail = tail->prev;
-            tail->next = nullptr;
-            head = head->prev;
-            head->prev = nullptr;
-
-            switch(dir){
-                case EDirection::eNorth:
-                    head->setPosition(head->next->getX(), head->next->getY() - stepAmount);
-                    break;
-                case EDirection::eEast:
-                    head->setPosition(head->next->getX() + stepAmount, head->next->getY());
-                    break;
-                case EDirection::eSouth:
-                    head->setPosition(head->next->getX(), head->next->getY() + stepAmount);
-                    break;
-                case EDirection::eWest:
-                    head->setPosition(head->next->getX() - stepAmount, head->next->getY());
-                default:
-                    break;
-            }
-        }
-        else{
-            switch(dir){
-                case EDirection::eNorth:
-                    head->setPosition(head->getX(), head->getY() - stepAmount);
-                    break;
-                case EDirection::eEast:
-                    head->setPosition(head->getX() + stepAmount, head->getY());
-                    break;
-                case EDirection::eSouth:
-                    head->setPosition(head->getX(), head->getY() + stepAmount);
-                    break;
-                case EDirection::eWest:
-                    head->setPosition(head->getX() - stepAmount, head->getY());
-                default:
-                    break;
-            }
-        }
-        // Update lastMove var to enforce legal movement
-        lastMove = dir;
+        dir = Snake::EDirection::eNorth;
     }
+
+    return dir;
 }
 
-void AISnake::grow(Snake::EDirection dir)
+void AISnake::setTarget(sf::Vector2i tar)
 {
-    // AI snake uses random movement
-    switch((rand()%3)){
-        case 0:
-            dir = Snake::EDirection::eNorth;
-            break;
-        case 1:
-            dir = Snake::EDirection::eEast;
-            break;
-        case 2:
-            dir = Snake::EDirection::eSouth;
-            break;
-        case 3:
-            dir = Snake::EDirection::eWest;
-            break;
-    }
-
-    // Check to see if snake is trying to move backwards into itself
-    if(dirCheck(dir)){
-        swapSegments(lastMove);
-    }
-    else{
-        Segment *newSegment = new Segment();
-            switch(dir){
-                case EDirection::eNorth:
-                    newSegment->setPosition(head->getX(), head->getY() - stepAmount);
-                    break;
-                case EDirection::eEast:
-                    newSegment->setPosition(head->getX() + stepAmount, head->getY());
-                    break;
-                case EDirection::eSouth:
-                    newSegment->setPosition(head->getX(), head->getY() + stepAmount);
-                    break;
-                case EDirection::eWest:
-                    newSegment->setPosition(head->getX() - stepAmount, head->getY());
-                    break;
-                case EDirection::eHold:
-                    newSegment->prev = tail;
-                    tail->next = newSegment;
-                    tail = newSegment;
-                    return;
-            }
-            newSegment->next = head;
-            head->prev = newSegment;
-            head = newSegment;
-            // Update lastMove var to enforce legal movement
-            lastMove = dir;
-            snakeSize++;
-    }
-    // Increment snakeSize for later use
-
+    target = tar;
 }

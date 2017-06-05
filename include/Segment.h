@@ -7,7 +7,7 @@ class Segment
 {
     public:
         //Constructor/destructor
-        Segment(int pX = 0, int pY = 0);
+        Segment(sf::Color col, int pX = 0, int pY = 0);
         ~Segment();
 
         // Public functions

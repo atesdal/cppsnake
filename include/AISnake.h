@@ -8,12 +8,17 @@ class AISnake : public Snake
     public:
         // Constructor/destructor
         AISnake(int startX, int startY);
-        ~AISnake();
+
+        // Inherited functions
+        void update(Snake::EDirection dir) override;
 
         // Public functions
-        void swapSegments(Snake::EDirection dir);
-        void grow(Snake::EDirection dir);
-        bool avoidCollision(Snake::EDirection dir);
+        Snake::EDirection setDirection();
+        void setTarget(sf::Vector2i tar) override;
+
+    private:
+        // Private vars
+        sf::Vector2i target;
 
 };
 
