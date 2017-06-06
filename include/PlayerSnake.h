@@ -6,11 +6,6 @@ class PlayerSnake : public Snake
 {
     public:
         PlayerSnake(int startX, int startY);
-        virtual ~PlayerSnake();
-        void swapSegments(Snake::EDirection dir);
-        void grow(Snake::EDirection dir);
-
-    protected:
 
     private:
 };

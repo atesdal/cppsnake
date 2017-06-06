@@ -1,6 +1,7 @@
 #include "../include/Game.h"
 #include <iostream>
 #include <sstream>
+#include <cmath>
 
 Game::Game(int width, int height, int totPickups)
 {
@@ -68,7 +69,9 @@ Game::Game(int width, int height, int totPickups)
 
 Game::~Game()
 {
-
+    for(auto p :snakeVector){
+        p->~Snake();
+    }
 }
 
 void Game::run()
@@ -76,7 +79,7 @@ void Game::run()
     // Setting default start direction
     Snake::EDirection direction = Snake::EDirection::eNorth;
 
-    sf::RenderWindow window(sf::VideoMode(gWidth, gHeight), "S6277144 SnakeICA");
+    sf::RenderWindow window(sf::VideoMode(gWidth, gHeight), "SnakeCPP");
 
 
     // Main game loop
@@ -133,6 +136,7 @@ void Game::run()
             }
 
             // Drawing objects to the renderwindow
+            AISnakeControl();
             window.clear();
             update(direction);
             checkCollisions();
@@ -143,8 +147,8 @@ void Game::run()
             window.display();
 
             // Debug messages to console
-//            std::cout << snakeVector[0]->debug() << std::endl; //<< snakeVector[1]->debug() << std::endl;
-//            std::cout << snakeVector[1]->debug() << std::endl; //<< snakeVector[1]->debug() << std::endl;
+//            std::cout << snakeVector[0]->debug() << std::endl;
+//            std::cout << snakeVector[1]->debug() << std::endl;
 //            std::cout << pickupVector[0]->debug() << std::endl;
 //            std::cout << pickupVector[1]->debug() << std::endl;
 //            std::cout << pickupVector[2]->debug() << std::endl;
@@ -270,6 +274,7 @@ void Game::checkCollisions()
             for(int i = 3; i < (p->getSnakeSize()); i++){
                 if(p->getHeadPos() == snakeToCheck->at(i)){
                     gameState = 2;
+                    delete snakeToCheck;
                     return;
                 }
             }
@@ -310,6 +315,7 @@ void Game::checkCollisions()
                         else{
                             gameState = 4;
                         }
+                        delete nextSnake;
                         return;
                     }
                 }
@@ -318,6 +324,35 @@ void Game::checkCollisions()
         }
         snakeNum++;
     }
+}
+
+void Game::AISnakeControl()
+{
+    for(auto p : snakeVector){
+        if(p->hasAI()){
+            sf::Vector2i currentHead = p->getHeadPos();
+            sf::Vector2i currentTarget = sf::Vector2i(-1, -1);
+            unsigned int currentOffset = 16000;
+            sf::Vector2i offset;
+            unsigned int totOffset = 0;
+            for(unsigned int i = 0; i < (pickupVector.size()); i++){
+                if(pickupVector[i]->getActive()){
+                    offset = getOffset(currentHead, pickupVector[i]->getPos());
+                    totOffset = offset.x + offset.y;
+                    if(totOffset < currentOffset){
+                        currentOffset = totOffset;
+                        currentTarget = pickupVector[i]->getPos();
+                    }
+                }
+            }
+            p->setTarget(currentTarget);
+        }
+    }
+}
+
+sf::Vector2i Game::getOffset(sf::Vector2i src, sf::Vector2i dest)
+{
+    return sf::Vector2i(abs(src.x - dest.x), abs(src.y - dest.y));
 }
 
 // To-string function for the game timer

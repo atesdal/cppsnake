@@ -1,6 +1,6 @@
 #include "../include/Segment.h"
 
-Segment::Segment(int pX, int pY)
+Segment::Segment(sf::Color col, int pX, int pY)
 {
     // Initializing vars
     next = nullptr;
@@ -9,7 +9,7 @@ Segment::Segment(int pX, int pY)
     posY = pY;
     segmentShape.setPosition(posX, posY);
     segmentShape.setRadius(10.0f);
-    segmentShape.setFillColor(sf::Color::Blue);
+    segmentShape.setFillColor(col);
 }
 
 Segment::~Segment()
@@ -29,6 +29,11 @@ void Segment::setPosition(int x, int y)
 void Segment::render(sf::RenderWindow &window)
 {
     window.draw(segmentShape);
+}
+
+void Segment::setColour(sf::Color col)
+{
+    segmentShape.setFillColor(col);
 }
 
 // Getter for segment X position

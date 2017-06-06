@@ -27,7 +27,6 @@ class Snake
         };
 
         // Public functions
-        void update(EDirection dir);
         void render(sf::RenderWindow &window);
         void setGrowth(int amount);
         void giveGlue(bool glue);
@@ -36,15 +35,19 @@ class Snake
         std::string getScoreString();
         void addScore(int amount);
         std::vector<sf::Vector2i>* getSnakeBody() const;
+        bool hasAI() const;
         std::string debug();
 
         // Virtual functions
-        virtual void swapSegments(EDirection dir) = 0;
-        virtual void grow(EDirection dir) = 0;
+        virtual void update(EDirection dir);
+        virtual void swapSegments(EDirection dir);
+        virtual void grow(EDirection dir);
+        virtual void setTarget(sf::Vector2i tar);
 
     protected:
         // Protected functions
         bool dirCheck(EDirection dir);
+        void setColour(sf::Color col);
 
         // Protected vars
         int score = 0;
@@ -52,9 +55,10 @@ class Snake
         int growthAmount = 0;
         int stepAmount = 20;
         bool hasGlue = false;
-        sf::CircleShape snakeHead;
+        sf::Color snakeColour;
         Segment *head, *tail;
         EDirection lastMove;
+        bool isAI;
 };
 
 #endif // SNAKE_H
