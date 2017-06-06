@@ -9,7 +9,7 @@ class Snake
 {
     public:
         // Constructor/destructor
-        Snake(int startX, int startY, sf::Color col);
+        Snake(int startX, int startY);
         virtual ~Snake();
 
         // Enum for directions, eNorth = up
@@ -27,7 +27,6 @@ class Snake
         };
 
         // Public functions
-
         void render(sf::RenderWindow &window);
         void setGrowth(int amount);
         void giveGlue(bool glue);
@@ -48,6 +47,7 @@ class Snake
     protected:
         // Protected functions
         bool dirCheck(EDirection dir);
+        void setColour(sf::Color col);
 
         // Protected vars
         int score = 0;

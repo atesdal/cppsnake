@@ -79,7 +79,7 @@ void Game::run()
     // Setting default start direction
     Snake::EDirection direction = Snake::EDirection::eNorth;
 
-    sf::RenderWindow window(sf::VideoMode(gWidth, gHeight), "S6277144 SnakeICA");
+    sf::RenderWindow window(sf::VideoMode(gWidth, gHeight), "SnakeCPP");
 
 
     // Main game loop
@@ -147,8 +147,8 @@ void Game::run()
             window.display();
 
             // Debug messages to console
-//            std::cout << snakeVector[0]->debug() << std::endl; //<< snakeVector[1]->debug() << std::endl;
-//            std::cout << snakeVector[1]->debug() << std::endl; //<< snakeVector[1]->debug() << std::endl;
+//            std::cout << snakeVector[0]->debug() << std::endl;
+//            std::cout << snakeVector[1]->debug() << std::endl;
 //            std::cout << pickupVector[0]->debug() << std::endl;
 //            std::cout << pickupVector[1]->debug() << std::endl;
 //            std::cout << pickupVector[2]->debug() << std::endl;

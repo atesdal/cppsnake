@@ -13,6 +13,7 @@ class Segment
         // Public functions
         void setPosition(int x, int y);
         void render(sf::RenderWindow &window);
+        void setColour(sf::Color col);
         int getX() const;
         int getY() const;
 

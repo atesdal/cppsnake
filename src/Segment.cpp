@@ -31,6 +31,11 @@ void Segment::render(sf::RenderWindow &window)
     window.draw(segmentShape);
 }
 
+void Segment::setColour(sf::Color col)
+{
+    segmentShape.setFillColor(col);
+}
+
 // Getter for segment X position
 int Segment::getX() const
 {

@@ -3,15 +3,12 @@
 #include <sstream>
 #include <string>
 
-Snake::Snake(int startX, int startY, sf::Color col)
+Snake::Snake(int startX, int startY)
 {
     // Creating starting segment and initializing vars
-    snakeColour = col;
+    snakeColour = sf::Color::Black;
     head = new Segment(snakeColour, startX, startY);
     tail = head;
-//    snakeHead.setPosition(head->getX(), head->getY());
-//    snakeHead.setRadius(10.0f);
-//    snakeHead.setFillColor(sf::Color::Green);
 }
 
 Snake::~Snake()
@@ -58,6 +55,7 @@ void Snake::swapSegments(EDirection dir)
             head = head->prev;
             tail = tail->prev;
             tail->next = nullptr;
+            head->prev = nullptr;
 
             switch(dir){
                 case EDirection::eNorth:
@@ -189,6 +187,16 @@ bool Snake::dirCheck(EDirection dir)
     return false;
 }
 
+void Snake::setColour(sf::Color col)
+{
+    snakeColour = col;
+    Segment *travNode = head;
+    while(travNode != nullptr){
+        travNode->setColour(snakeColour);
+        travNode = travNode->next;
+    }
+}
+
 // Setter function for snake growth
 void Snake::setGrowth(int amount)
 {
@@ -264,11 +272,31 @@ std::string Snake::debug()
 
     s += "The elements in the snake are ";
     do{
-        s += "\n";
+        s += "\nPrev: ";
+        if(travNode->prev != nullptr){
+            ss << travNode->prev;
+            s += ss.str();
+            ss.str("");
+            ss.clear();
+        }
+        else{
+            s += "00000000";
+        }
+        s += " Current: ";
         ss << travNode;
         s += ss.str();
         ss.str("");
         ss.clear();
+        s += " Next: ";
+        if(travNode->next != nullptr){
+            ss << travNode->next;
+            s += ss.str();
+            ss.str("");
+            ss.clear();
+        }
+        else{
+            s += "00000000";
+        }
         s += " :";
         ss << travNode->getX();
         s += ss.str();

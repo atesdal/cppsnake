@@ -1,9 +1,10 @@
 #include "AISnake.h"
 
-AISnake::AISnake(int startX, int startY) : Snake(startX, startY, sf::Color::Blue)
+AISnake::AISnake(int startX, int startY) : Snake(startX, startY)
 {
     isAI = true;
     snakeColour = sf::Color::Blue;
+    setColour(snakeColour);
 }
 
 void AISnake::update(Snake::EDirection dir)
